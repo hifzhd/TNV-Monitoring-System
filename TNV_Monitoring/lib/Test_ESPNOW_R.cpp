@@ -15,53 +15,48 @@ typedef struct struct_message {
 // Create a struct_message called myData
 struct_message myData;
 
-// Peer information
-esp_now_peer_info_t peerInfo;
+// Reveived Datas
 
-// Callback when data is sent
-void OnDataSent(const uint8_t *mac_addr, esp_now_send_status_t status) {
-  Serial.print("Send Status: ");
-  Serial.println(status == ESP_NOW_SEND_SUCCESS ? "Success" : "Fail");
+struct_message board1;
+struct_message board2;
+struct_message board3;
+
+// Array to hold received data
+struct_message receivedData[3] = {board1, board2, board3};
+
+// Callback when data is received
+void OnDataRecv(const uint8_t *mac_addr, const uint8_t *incomingData, int len) {
+    char macStr[18];
+    Serial.printf("Received data from: ");
+    snprintf(macStr, sizeof(macStr), "%02x:%02x:%02x:%02x:%02x:%02x",
+        mac_addr[0], mac_addr[1], mac_addr[2],
+        mac_addr[3], mac_addr[4], mac_addr[5]);
+    Serial.println(macStr);
+    memcpy(&myData, incomingData, sizeof(myData));
+    Serial.printf("Board ID: %d\rData ID: %d\tData: %.2f\n", myData.id, myData.data_id, myData.data);
+
+    // Store the received data in the struct
+    receivedData[myData.id - 1] = myData;
 }
 
 void setup() {
-  Serial.begin(115200);
-  WiFi.mode(WIFI_STA);
-  Serial.println("ESP-NOW Sender 1 started");
+    Serial.begin(115200);
+    WiFi.mode(WIFI_STA);
+    Serial.println("ESP-NOW Receiver started");
 
-  // Initialize ESP-NOW
-  if (esp_now_init() != ESP_OK) {
-    Serial.println("Error initializing ESP-NOW");
-    return;
-  }
-  esp_now_register_send_cb(OnDataSent);
-
-  // Set up peer information
-  memcpy(peerInfo.peer_addr, broadcastAddress, 6);
-  peerInfo.channel = 0; // Use current channel
-  peerInfo.encrypt = false;
-
-  // Add peer
-  if (esp_now_add_peer(&peerInfo) != ESP_OK) {
-    Serial.println("Failed to add peer");
-    return;
-  }
+    // Initialize ESP-NOW
+    if (esp_now_init() != ESP_OK) {
+        Serial.println("Error initializing ESP-NOW");
+        return;
+    }
+    
+    // Register the receive callback
+    esp_now_register_recv_cb(esp_now_recv_cb_t(OnDataRecv));
 }
 
 void loop(){
-    // Send data
-    myData.id = 1; // Change for different sender IDs
-    myData.data_id = random(0, 255); // for verification
-    myData.data = random(0, 100) / 10.0;
-
-    // Send the data
-    esp_err_t result = esp_now_send(broadcastAddress, (uint8_t *) &myData, sizeof(myData));
-
-    if (result == ESP_OK) {
-        Serial.println("Data sent!");
-        Serial.printf("ID: %d, Data ID: %d, Data: %.2f\n", myData.id, myData.data_id, myData.data);
-    } else {
-        Serial.println("Error sending data");
-    }
+    Serial.printf("ID:%d %d %d Data 1: %d\t Data 2: %d\t Data 3: %d\n", 
+                  receivedData[0].data_id, receivedData[1].data_id, receivedData[2].data_id,
+                  receivedData[0].data, receivedData[1].data, receivedData[2].data);
     delay(1000);
 }
