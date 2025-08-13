@@ -21,7 +21,7 @@ void readMacAddress(){
 
 void setup(){
   Serial.begin(115200);
-
+  Serial.println("[DEFAULT] Get ESP32 Board MAC Address");
   WiFi.mode(WIFI_STA);
 
   Serial.print("[DEFAULT] ESP32 Board MAC Address: ");
@@ -31,3 +31,8 @@ void setup(){
 void loop(){
 
 }
+
+// MAC ADRESS
+// ESP32 1  -> ec:e3:34:21:13:20 (S)
+// ESP32 2  -> ec:e3:34:21:91:74 (R)
+// ESP32 3  -> 00:1A:2B:3C:4D:5E

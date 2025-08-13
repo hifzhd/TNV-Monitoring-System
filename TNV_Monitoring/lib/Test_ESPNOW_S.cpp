@@ -3,9 +3,9 @@
 #include <WiFi.h>
 
 // MAC Adress
-uint8_t broadcastAddress[] = {0xFF, 0xFF, 0xFF, 0xFF, 0xFF, 0xFF};
+uint8_t broadcastAddress[] = {0xEC, 0xE3, 0x34, 0x21, 0x91, 0x74};
 
-// Structure to receive data
+// Structure to receive dataec:e3:34:21:91:74
 typedef struct struct_message {
   int id;
   u8_t data_id;
