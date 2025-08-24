@@ -12,7 +12,6 @@ U8G2_SSD1306_128X32_UNIVISION_F_HW_I2C u8g2(U8G2_R0, /* reset=*/ U8X8_PIN_NONE);
 // Structure for incoming data
 typedef struct struct_message {
   int id;
-  uint8_t data_id;
   float data;
 } struct_message;
 
