@@ -9,9 +9,8 @@ In this project, we develop an ESP32 based instrumentation system that measures 
 - Piezo Vibration Sensor Module Flexible Piezo Film Vibration Sensor
 - W5500 Ethernet LAN TCP/IP Network Module
 - Breadboard, cables, resistor, LED, and other passive and power components
-## Software
+### Software
 In this project, the porgram is developed in Visual Studio Codes with platform.io extension. The program is then debugged using QtSerial Monitor. For testing the Modbus TCP/IP communication, the slave device is a laptop with a Modbus slave application to simulate a Modbus Server/Slave device.
-[![platformio Download](https://img.shields.io/badge/License-MIT-green.svg)](https://platformio.org/install)
-[![QtSerial Monitor Download](https://img.shields.io/badge/License-GPL%20v3-yellow.svg)](https://github.com/mich-w/QtSerialMonitor/)
-[![ModbusSlave Download](https://img.shields.io/badge/license-AGPL-blue.svg)](https://www.modbustools.com/download.html)
-
+- [Platform io](https://platformio.org/install)
+- [Qt Serial Monitor](https://github.com/mich-w/QtSerialMonitor/)
+- [Modbus Slave](https://www.modbustools.com/download.html)
