@@ -1,6 +1,14 @@
 # TNV-Monitoring-System
 In this project, we develop an ESP32 based instrumentation system that measures temperature, noise level (SPL), and vibration. Three of these sensor are wired seperately with their corresponding ESP32, but all of the data will be collected wirelessly to a single device via ESP-NOW comminication protocol. Then, the centralized data will be sent to a Modbus TCP/IP Server/Slave device. This architecture allows the measuring point to be seperated for different variables, while also easing the communication between the devices to the Modbus TCP/IP Server/Slave device
 
+## Features
+- Temperature monitoring
+- Noise level measurement in dB with A weighting
+- Vibration frequency spectrum analyzer
+- Calibration features
+- ESP-NOW wireless communication
+- Modbus TCP/IP communication using ethernet
+
 ## Used Tools and Materials
 ### Hardware
 - ESP32 DevKitC WROOM-32D V4 CH9102X
